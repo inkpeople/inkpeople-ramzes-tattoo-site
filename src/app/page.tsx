@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowUpRight, Menu, X, MapPin, ArrowDown } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowUpRight, Menu, X, MapPin, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 const VK = "https://vk.me/blacktattoo54";
 const TG = "https://t.me/ramzestattoo54";
@@ -16,6 +16,14 @@ const works = ["ГРАФИКА","РЕАЛИЗМ","ЧЁРНО-БЕЛАЯ РАБО
 
 export default function Home() {
   const [menuOpen,setMenuOpen] = useState(false);
+  const portfolioRef = useRef<HTMLDivElement>(null);
+  const scrollPortfolio = (direction: number) => {
+    const track = portfolioRef.current;
+    if (!track) return;
+    const card = track.querySelector<HTMLElement>(".portfolio-tile");
+    const distance = card ? card.getBoundingClientRect().width + 14 : track.clientWidth * 0.8;
+    track.scrollBy({ left: direction * distance, behavior: "smooth" });
+  };
   const closeMenu = () => setMenuOpen(false);
   return (
     <main>
@@ -58,7 +66,7 @@ export default function Home() {
       <section className="section" id="works">
         <div className="container">
           <div className="section-head"><div><div className="kicker">Портфолио</div><h2>Работы<br/>говорят сами</h2></div><p className="section-intro">Здесь будет собрана галерея реальных работ RAMZES. Никаких чужих фотографий и случайных картинок.</p></div>
-          <div className="portfolio-grid">{works.map((w,i)=><div className="portfolio-tile" key={w}><span>{String(i+1).padStart(2,"0")} / {w}<br/><br/>ФОТО РАБОТЫ ДОБАВИМ</span></div>)}</div>
+          <div className="portfolio-controls"><span>ЛИСТАЙ ПОРТФОЛИО</span><div><button type="button" aria-label="Предыдущие работы" onClick={()=>scrollPortfolio(-1)}><ChevronLeft size={20}/></button><button type="button" aria-label="Следующие работы" onClick={()=>scrollPortfolio(1)}><ChevronRight size={20}/></button></div></div><div className="portfolio-track" ref={portfolioRef}>{works.map((w,i)=><div className="portfolio-tile" key={w}><span>{String(i+1).padStart(2,"0")} / {w}<br/><br/>ФОТО РАБОТЫ ДОБАВИМ</span></div>)}</div>
           <p className="portfolio-note">Пока это места под фотографии. После загрузки твоих работ заменю заглушки реальными снимками.</p>
         </div>
       </section>
