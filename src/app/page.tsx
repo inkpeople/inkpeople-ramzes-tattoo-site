@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Menu, X, Instagram, Send, MapPin, ArrowDown } from "lucide-react";
+import { ArrowUpRight, Menu, X, MapPin, ArrowDown } from "lucide-react";
 
 const VK = "https://vk.me/blacktattoo54";
 const TG = "https://t.me/ramzestattoo54";
